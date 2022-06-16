@@ -1,7 +1,7 @@
 ---
 title: How to create a KakaoTalk Chat Bot
 description: There is almost zero content in english on how to use the KakaoTalk APIs. Good for you I got it figured out and we will explore it here and create a see how we can create a KakoTalk Chat Bot that translates everything we write into Korean or English.
-slug: ruby
+slug: how-to-create-a-kakaotalk-chat-bot
 date: 2022-06-14 00:00:00+0000
 image: cover.png
 categories:
