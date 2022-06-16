@@ -228,3 +228,5 @@ markup:
     lineNos: true
     lineNumbersInTable: true
     tabWidth: 4
+
+publishDir: "docs"
