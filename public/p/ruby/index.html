@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en-EN">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='There is almost zero content in english on how to use the KakaoTalk APIs. Good for you I got it figured out and we will explore it here and create a see how we can create a KakoTalk Chat Bot that translates everything we write into Korean or English.'><title>How to create a KakaoTalk Chat Bot</title>
+
+<link rel='canonical' href='https://geselle.fr/p/ruby/'>
+
+<link rel="stylesheet" href="/scss/style.min.b949db8bead9abdc40291b93383b8da6abc3aa62e74f5580356c06ddbb792dab.css"><meta property='og:title' content='How to create a KakaoTalk Chat Bot'>
+<meta property='og:description' content='There is almost zero content in english on how to use the KakaoTalk APIs. Good for you I got it figured out and we will explore it here and create a see how we can create a KakoTalk Chat Bot that translates everything we write into Korean or English.'>
+<meta property='og:url' content='https://geselle.fr/p/ruby/'>
+<meta property='og:site_name' content='Thomas Geselle'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='dev' /><meta property='article:tag' content='ruby' /><meta property='article:published_time' content='2022-06-14T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-06-14T00:00:00&#43;00:00'/><meta property='og:image' content='https://geselle.fr/p/ruby/cover.png' />
+<meta name="twitter:title" content="How to create a KakaoTalk Chat Bot">
+<meta name="twitter:description" content="There is almost zero content in english on how to use the KakaoTalk APIs. Good for you I got it figured out and we will explore it here and create a see how we can create a KakoTalk Chat Bot that translates everything we write into Korean or English."><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://geselle.fr/p/ruby/cover.png' />
+    </head>
+    <body class="
+    article-page has-toc
+">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex 
+    
+        extended
+    
+">
+    
+        <div id="article-toolbar">
+            <a href="/" class="back-home">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="15 6 9 12 15 18" />
+</svg>
+
+
+
+                <span>Back</span>
+            </a>
+        </div>
+    
+<main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/p/ruby/">
+                <img src="/p/ruby/cover_hu456db76a6f71f7c3efc96e613af69e44_268340_800x0_resize_box_3.png"
+                        srcset="/p/ruby/cover_hu456db76a6f71f7c3efc96e613af69e44_268340_800x0_resize_box_3.png 800w, /p/ruby/cover_hu456db76a6f71f7c3efc96e613af69e44_268340_1600x0_resize_box_3.png 1600w"
+                        width="800" 
+                        height="200" 
+                        loading="lazy"
+                        alt="Featured image of post How to create a KakaoTalk Chat Bot" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/dev/" >
+                dev
+            </a>
+        
+    </header>
+    
+
+    <h2 class="article-title">
+        <a href="/p/ruby/">How to create a KakaoTalk Chat Bot</a>
+    </h2>
+
+    
+    <h3 class="article-subtitle">
+        There is almost zero content in english on how to use the KakaoTalk APIs. Good for you I got it figured out and we will explore it here and create a see how we can create a KakoTalk Chat Bot that translates everything we write into Korean or English.
+    </h3>
+    
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Jun 14, 2022</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    7 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+</div>
+</header>
+
+    <section class="article-content">
+    
+    
+    <p>Interested in creating a KakaoTalk Chat Bot or explore their APIs but unfortunately you can&rsquo;t read nor speak Korean? Well, this is the place for you.</p>
+<p>I recently discovered KakaoTalk via a couple of South Korean friends that use it for their daily communication. Unfortunately, one of them recently moved to the US and still has a bit of difficulty with communicating in English.
+As a non-native english speaker, I remember how long it took me to learn it and I wished I just had a quick way to still chat with my friends without having to go on Google Translate every 5 seconds to understand what they are writing.
+My friends also often write a bunch of messages in group chat in Korean and as someone who understands absolutely nothing, it started to be a bit of a hassle to translate everything into English myself.</p>
+<p>Here&rsquo;s where that idea of creating a KakaoTalk Translation Bot came from.</p>
+<p>Bad news, most of the KakaoTalk users are Korean and therefore, when I decided to create that chat bot, there was no resources available in english concerning any kind of KakaoTalk API.</p>
+<p>You can see what it looks like in action here:
+<img src="/images/Screen%20Shot%202022-03-08%20at%209.36.04%20PM.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="Example"
+	
+	
+></p>
+<p>As you can see the bot can translate from English to Korean and from Korean to English.
+It also directly attaches the translation as a reply to the message.</p>
+<p>So how do create that?</p>
+<h1 id="kakaotalk-unofficial-api">KakaoTalk Unofficial API</h1>
+<p>KakaoTalk possess a various list of APIs available here: <a class="link" href="https://developers.kakao.com/"  target="_blank" rel="noopener"
+    >https://developers.kakao.com/</a>.
+The 2 closest APIs we could use to create a Chat Bot could be this one <a class="link" href="https://developers.kakao.com/product/kakaoTalkChannel"  target="_blank" rel="noopener"
+    >https://developers.kakao.com/product/kakaoTalkChannel</a> or this one <a class="link" href="https://developers.kakao.com/product/message"  target="_blank" rel="noopener"
+    >https://developers.kakao.com/product/message</a>.
+Unfortunately, nothing, at the time this blog post was wrote, exists to directly reads a user conversation and reply to it.</p>
+<p>KakaoTalk uses the proprietary LOCO message protocol for its messaging system. I was not successful in finding any good english resources about it but a few unofficial LOCO-compatible projects exist on Github.</p>
+<p>The one I uses for my translate bot is <a class="link" href="https://github.com/storycraft/node-kakao"  target="_blank" rel="noopener"
+    >https://github.com/storycraft/node-kakao</a> and the thing that caught my attention is this example: <a class="link" href="https://github.com/storycraft/node-kakao/blob/b3665855481e631f29fad813cd954b29279568e3/examples/login-chat.ts#L30"  target="_blank" rel="noopener"
+    >https://github.com/storycraft/node-kakao/blob/b3665855481e631f29fad813cd954b29279568e3/examples/login-chat.ts#L30</a>.
+Looks like that little piece of code is exactly what we want to do: append a text message to a conversation and send it!</p>
+<h1 id="lets-code-our-chat-bot">Let&rsquo;s code our Chat Bot</h1>
+<p>Now that we found our potential way to interact with KakaoTalk it&rsquo;s time to develop our translation bot.
+I personally use <a class="link" href="https://papago.naver.com/"  target="_blank" rel="noopener"
+    >Papago</a> and its <a class="link" href="https://developers.naver.com/docs/papago/README.md"  target="_blank" rel="noopener"
+    >API</a> as my translation engine. You can also use Google Translate or Amazon Translate. The translations won&rsquo;t be good but I find Papago to be the one that sucks the least.</p>
+<p>You will also need to create a new KakaoTalk account and use it as your bot account.</p>
+<h2 id="uuid-generator">UUID Generator</h2>
+<p>You also need to get or generate a device UUID.
+Create a new node project (<code>npm init</code>), add node-kakao (<code>npm i -S node-kakao</code>) and create a file with this script</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># uuid_generator.ts
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">import { util } from &#39;node-kakao&#39;;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">console.log(util.randomAndroidSubDeviceUUID());
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Run <code>npx ts-node uuid_generator.ts</code> in your terminal and get your UUID.</p>
+<h2 id="api-connection">API Connection</h2>
+<p>Now let&rsquo;s try to connect to the API. In a new file you can add this code:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># server.ts
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">import { AuthApiClient, TalkClient } from &#39;node-kakao&#39;;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">const DEVICE_UUID = &#34;&#34;; // Put the UUID you generated
+</span></span><span class="line"><span class="cl">const DEVICE_NAME = &#34;&#34;; // Any name works here
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">const EMAIL = &#34;&#34;; // Put your KakaoTalk account email
+</span></span><span class="line"><span class="cl">const PASSWORD = &#34;&#34;; // Put your KakaoTalk account password
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">const CLIENT = new TalkClient();
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">async function main() {
+</span></span><span class="line"><span class="cl">    const api = await AuthApiClient.create(DEVICE_NAME, DEVICE_UUID);
+</span></span><span class="line"><span class="cl">    const loginRes = await api.login({
+</span></span><span class="line"><span class="cl">        email: EMAIL,
+</span></span><span class="line"><span class="cl">        password: PASSWORD,
+</span></span><span class="line"><span class="cl">    });
+</span></span><span class="line"><span class="cl">    if (!loginRes.success) throw new Error(`Web login failed with status: ${loginRes.status}`);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    console.log(`Received access token: ${loginRes.result.accessToken}`);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    const res = await CLIENT.login(loginRes.result);
+</span></span><span class="line"><span class="cl">    if (!res.success) throw new Error(`Login failed with status: ${res.status}`);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    console.log(&#39;Login success&#39;);
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">main().then();
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Run the script with <code>npx ts-node server.ts</code>. If everything went well you should see <code>Login success</code> in your terminal.
+Good! Now let&rsquo;s see if we can collect the messages sent to our bot.</p>
+<h2 id="catch-messages">Catch messages</h2>
+<p>Here we will use the function <code>CLIENT.on('chat', ...){}</code> which means ANY message sent to the bot will be processed.
+For each message received, we will send back a direct reply with <code>OK</code>.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># server.ts
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">import { AuthApiClient, TalkClient, ReplyContent, ChatBuilder, KnownChatType } from &#39;node-kakao&#39;;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">const DEVICE_UUID = &#34;&#34;; // Put the UUID you generated
+</span></span><span class="line"><span class="cl">const DEVICE_NAME = &#34;&#34;; // Any name works here
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">const EMAIL = &#34;&#34;; // Put your KakaoTalk account email
+</span></span><span class="line"><span class="cl">const PASSWORD = &#34;&#34;; // Put your KakaoTalk account password
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">const CLIENT = new TalkClient();
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">CLIENT.on(&#39;chat&#39;, async (data, channel) =&gt; {
+</span></span><span class="line"><span class="cl">    const sender = data.getSenderInfo(channel);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    console.log(data)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    if (!sender) return;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    if (&#39;text&#39; in data &amp;&amp; Object.keys(data.attachment()).length === 0) {
+</span></span><span class="line"><span class="cl">        channel.sendChat(
+</span></span><span class="line"><span class="cl">            new ChatBuilder()
+</span></span><span class="line"><span class="cl">                .append(new ReplyContent(data.chat))
+</span></span><span class="line"><span class="cl">                // @ts-ignore
+</span></span><span class="line"><span class="cl">                .text(&#34;OK&#34;)
+</span></span><span class="line"><span class="cl">                .build(KnownChatType.REPLY)
+</span></span><span class="line"><span class="cl">        )
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">});
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">async function main() {
+</span></span><span class="line"><span class="cl">    const api = await AuthApiClient.create(DEVICE_NAME, DEVICE_UUID);
+</span></span><span class="line"><span class="cl">    const loginRes = await api.login({
+</span></span><span class="line"><span class="cl">        email: EMAIL,
+</span></span><span class="line"><span class="cl">        password: PASSWORD,
+</span></span><span class="line"><span class="cl">    });
+</span></span><span class="line"><span class="cl">    if (!loginRes.success) throw new Error(`Web login failed with status: ${loginRes.status}`);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    console.log(`Received access token: ${loginRes.result.accessToken}`);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    const res = await CLIENT.login(loginRes.result);
+</span></span><span class="line"><span class="cl">    if (!res.success) throw new Error(`Login failed with status: ${res.status}`);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    console.log(&#39;Login success&#39;);
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">main().then();
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Run the script with the same command as above. Add your bot as a friend to KakaoTalk and send him a message. He should reply to you with OK.
+Alright now the final part, let&rsquo;s use the Papago API to translate the messages.</p>
+<h2 id="translator">Translator</h2>
+<p>Add the papago and google translate libraries: <code>npm i -S papago @google-cloud/translate</code> and go create a Naver developer account here: <a class="link" href="https://developers.naver.com/main/"  target="_blank" rel="noopener"
+    >https://developers.naver.com/main/</a>. You will need to generate a Papago API key.
+I&rsquo;m using Google Translate here to detect the source language.</p>
+<p>Now let&rsquo;s add a translation function to our script and use it in our catch message function:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># server.ts
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">import { AuthApiClient, TalkClient, ReplyContent, ChatBuilder, KnownChatType } from &#39;node-kakao&#39;;
+</span></span><span class="line"><span class="cl">import {Translate} from &#34;@google-cloud/translate/build/src/v2&#34;;
+</span></span><span class="line"><span class="cl">import Translator from &#39;papago&#39;;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">const DEVICE_UUID = &#34;&#34;; // Put the UUID you generated
+</span></span><span class="line"><span class="cl">const DEVICE_NAME = &#34;&#34;; // Any name works here
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">const EMAIL = &#34;&#34;; // Put your KakaoTalk account email
+</span></span><span class="line"><span class="cl">const PASSWORD = &#34;&#34;; // Put your KakaoTalk account password
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">const CLIENT = new TalkClient();
+</span></span><span class="line"><span class="cl">const translate = new Translate();
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">async function translateText(text: string) {
+</span></span><span class="line"><span class="cl">    let languageDetection = await translate.detect(text)
+</span></span><span class="line"><span class="cl">    let output = &#34;ko&#34;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    console.log(languageDetection)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    if (languageDetection[0].language === &#39;ko&#39;) output = &#34;en&#34;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    let translator = new Translator(&#34;PAPAGO ID&#34;, &#34;PAPAGO API KEY&#34;)
+</span></span><span class="line"><span class="cl">    return translator.translate(text, languageDetection[0].language, output)
+</span></span><span class="line"><span class="cl">        // @ts-ignore
+</span></span><span class="line"><span class="cl">        .then(res =&gt; {
+</span></span><span class="line"><span class="cl">            return res.text
+</span></span><span class="line"><span class="cl">        })
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">CLIENT.on(&#39;chat&#39;, async (data, channel) =&gt; {
+</span></span><span class="line"><span class="cl">    const sender = data.getSenderInfo(channel);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    console.log(data)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    if (!sender) return;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    if (&#39;text&#39; in data &amp;&amp; Object.keys(data.attachment()).length === 0) {
+</span></span><span class="line"><span class="cl">        let translation = await translateText(data.text)
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        channel.sendChat(
+</span></span><span class="line"><span class="cl">            new ChatBuilder()
+</span></span><span class="line"><span class="cl">                .append(new ReplyContent(data.chat))
+</span></span><span class="line"><span class="cl">                // @ts-ignore
+</span></span><span class="line"><span class="cl">                .text(translation)
+</span></span><span class="line"><span class="cl">                .build(KnownChatType.REPLY)
+</span></span><span class="line"><span class="cl">        )
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">});
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">async function main() {
+</span></span><span class="line"><span class="cl">    const api = await AuthApiClient.create(DEVICE_NAME, DEVICE_UUID);
+</span></span><span class="line"><span class="cl">    const loginRes = await api.login({
+</span></span><span class="line"><span class="cl">        email: EMAIL,
+</span></span><span class="line"><span class="cl">        password: PASSWORD,
+</span></span><span class="line"><span class="cl">    });
+</span></span><span class="line"><span class="cl">    if (!loginRes.success) throw new Error(`Web login failed with status: ${loginRes.status}`);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    console.log(`Received access token: ${loginRes.result.accessToken}`);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    const res = await CLIENT.login(loginRes.result);
+</span></span><span class="line"><span class="cl">    if (!res.success) throw new Error(`Login failed with status: ${res.status}`);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    console.log(&#39;Login success&#39;);
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">main().then();
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Now run the script, send a message and you should your message being translated to Korean!
+If you send a message in Korean you should also see it being translated to English!</p>
+<p>Enjoy your new KakaoTalk translator with your friends.</p>
+<p>You can find the whole project on my Github repo here:
+<a class="link" href="https://github.com/tgeselle/kakaotalk-translator"  target="_blank" rel="noopener"
+    >https://github.com/tgeselle/kakaotalk-translator</a></p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/dev/">dev</a>
+        
+            <a href="/tags/ruby/">ruby</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    <aside class="related-contents--wrapper">
+    
+    
+</aside>
+
+     
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "hugo-theme-stack" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (DISQUS) {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2022 Thomas Geselle
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.8.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    
+        <aside class="sidebar right-sidebar sticky">
+            <section class="widget archives">
+                <div class="widget-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+                </div>
+                <h2 class="widget-title section-title">Table of contents</h2>
+                
+                <div class="widget--toc">
+                    <nav id="TableOfContents">
+  <ol>
+    <li><a href="#uuid-generator">UUID Generator</a></li>
+    <li><a href="#api-connection">API Connection</a></li>
+    <li><a href="#catch-messages">Catch messages</a></li>
+    <li><a href="#translator">Translator</a></li>
+  </ol>
+</nav>
+                </div>
+            </section>
+        </aside>
+    
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
